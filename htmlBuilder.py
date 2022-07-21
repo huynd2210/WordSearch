@@ -1,19 +1,34 @@
-def buildHtml(sizeI=8, sizeJ=8):
+def displayInitialHtml():
     with open('templates/index.html', 'r') as file:
         html = file.read()
-    html += buildHtmlTable(sizeI, sizeJ)
-    closingTags = '</tbody>\n</table>\n</form>\n</div>\n</body>\n</html>'
-    html += closingTags
     return html
+
+def buildFullHtml(sizeI=None, sizeJ=None):
+    html = displayInitialHtml()
+
+    if sizeI is not None and sizeJ is not None:
+        html += buildHtmlTable(sizeI, sizeJ)
+        html += '</tbody>\n</table>\n ' \
+              '<p></p>\n' \
+              '<label>\n' \
+              '<input type="submit" value="Solve"\n' \
+              '</label>' \
+              '</form>\n</div>'
+
+    end = '</body>\n</html>'
+    html += end
+    return html
+
 
 def buildHtmlTable(sizeI, sizeJ):
     html = '<div id="board">\n' \
-           '<form name="wordBoard" method="post">\n' \
-           '<table class="chess-board">\n' \
+           '<form action="#" name="wordBoard" method="post">\n' \
+           '<table class="word-board">\n' \
            '<tbody>\n'
     html += buildHtmlTableHeader(sizeJ)
     html += buildHtmlTableRows(sizeI, sizeJ)
     return html
+
 
 def buildHtmlTableHeader(sizeJ):
     th = '<tr>\n<th></th>\n'
@@ -26,6 +41,7 @@ def buildHtmlTableHeader(sizeJ):
 def buildHtmlTableRows(sizeI, sizeJ):
     return ''.join(buildHtmlTableRow(i, sizeJ) for i in range(sizeI))
 
+
 def buildHtmlTableRow(currentI, sizeJ):
     htmlTableRow = '<tr>\n'
     htmlTableRow += f'<th>{currentI}' + '</th>\n'
@@ -36,12 +52,13 @@ def buildHtmlTableRow(currentI, sizeJ):
                                                                                                         '="autotab(this, ' \
                                                                                                         'document.wordBoard.' + 'i' + str(
                 currentI + 1) + 'j' + '0' + ')">\n' \
-                                               '</label></td>\n'
+                                            '</label></td>\n'
         else:
             htmlTableRow += '<td class="light"><label>\n' \
                             '<input type="text" maxlength="1" name="i' + str(currentI) + "j" + str(j) + '" onkeyup' \
-                                                                                                       '="autotab(this, ' \
-                                                                                                       'document.wordBoard.' + 'i' + str(currentI) + 'j' + str(j + 1) + ')">\n' \
-                                                                                                       '</label></td>\n'
+                                                                                                        '="autotab(this, ' \
+                                                                                                        'document.wordBoard.' + 'i' + str(
+                currentI) + 'j' + str(j + 1) + ')">\n' \
+                                               '</label></td>\n'
     htmlTableRow += '</tr>\n'
     return htmlTableRow
