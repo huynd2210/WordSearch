@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+        .chess-board { border-spacing: 0; border-collapse: collapse; }
+        .chess-board th { padding: .5em; }
+        .chess-board th + th { border-bottom: 1px solid #000; }
+        .chess-board th:first-child,
+        .chess-board td:last-child { border-right: 1px solid #000; }
+        .chess-board tr:last-child td { border-bottom: 1px solid; }
+        .chess-board th:empty { border: none; }
+        .chess-board td { width: 1.5em; height: 1.5em; text-align: center; font-size: 32px; line-height: 0;}
+        .chess-board input{width: 1.5em; height: 1.5em;}
+        .chess-board .light { background: #eee; }
+        .chess-board .dark { background: #aaa; }
+    </style>
+</head>
+<body>
+<script>
+    function autotab(original,destination){
+        if (original.getAttribute && original.value.length==original.getAttribute("maxlength"))
+            destination.focus()
+    }
+
+    function makeRow(){
+        document.getElementById("board").innerHTML += '<p>shiet</p>'
+        console.log(document.getElementById("board").innerHTML)
+    }
+</script>
+<p>Enter board size</p>
+<form name="size" method="post">
+    <p>x:<label>
+        <input type="text" size="2.5em">
+    </label> y: <label>
+        <input type="text" size="2.5em">
+    </label></p>
+</form>
