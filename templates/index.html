@@ -28,9 +28,14 @@
         document.getElementById("board").innerHTML += '<p>shiet</p>'
         console.log(document.getElementById("board").innerHTML)
     }
+
+    function collect($event){
+        console.log($event)
+    }
+
 </script>
 <p>Enter board size</p>
-<form action="#" name="size" method="post">
+<form action="/" name="size" method="post">
     <p>x:<label>
         <input type="text" name="i" size="2.5em">
     </label> y: <label>
