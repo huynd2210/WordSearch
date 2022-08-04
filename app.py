@@ -37,7 +37,7 @@ def temp():
     # print(wordSearch.search(board))
     solutionDict = wordSearch.search(board)
 
-    return htmlBuilder.buildFullHtml(sizeI, sizeJ, True, solutionDict.values(), board)
+    return htmlBuilder.buildFullHtml(sizeI, sizeJ, True, solutionDict.items(), board)
 
 
 # @app.route("/board", methods=["POST"])

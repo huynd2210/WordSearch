@@ -1,3 +1,5 @@
+currentLongestWord = ''
+
 def displayInitialHtml():
     with open('templates/index.html', 'r') as file:
         html = file.read()
@@ -6,15 +8,18 @@ def displayInitialHtml():
 
 def buildFullHtml(sizeI=None, sizeJ=None, isSolution=False, solutionSet=None, board=None):
     html = displayInitialHtml()
-
     if sizeI is not None and sizeJ is not None:
         html += buildHtmlTable(sizeI, sizeJ, isSolution, solutionSet, board)
         html += '</tbody>\n</table>\n ' \
                 '<p></p>\n' \
                 '<label>\n' \
-                '<input type="submit" value="Solve"\n' \
-                '</label>' \
-                '</form>\n</div>'
+                '<input type="submit" value="Solve">\n' \
+                '</label>\n' \
+                '</form>\n' \
+                '</div>\n'
+
+        if currentLongestWord != '':
+            html += f'<p>Longest word is:{currentLongestWord}</p>'
 
     end = '</body>\n</html>'
     html += end
@@ -41,7 +46,8 @@ def buildHtmlTableHeader(sizeJ):
 
 def buildHtmlTableRows(sizeI, sizeJ, isSolution, solutionSet, board):
     if isSolution:
-        return ''.join(buildHtmlTableRowWithSolution(i, sizeJ, solutionSet, board) for i in range(sizeI))
+        return ''.join(buildHtmlTableRowWithSolution(i, sizeJ, solutionSet, board)for i in range(sizeI))
+
     else:
         return ''.join(buildHtmlTableRow(i, sizeJ) for i in range(sizeI))
 
@@ -71,8 +77,9 @@ def buildHtmlTableRow(currentI, sizeJ):
 def buildHtmlTableRowWithSolution(currentI, sizeJ, solutionSet, board):
     htmlTableRow = '<tr>\n'
     htmlTableRow += f'<th>{currentI}' + '</th>\n'
+    global currentLongestWord
     for j in range(sizeJ):
-        for coords in solutionSet:
+        for word, coords in solutionSet:
             color = 'dark' if (currentI, j) in coords else 'light'
 
             if j == sizeJ - 1:
@@ -91,6 +98,7 @@ def buildHtmlTableRowWithSolution(currentI, sizeJ, solutionSet, board):
                                                'document.wordBoard.' + 'i' + str(
                     currentI) + 'j' + str(j + 1) + ')">\n' \
                                                    '</label></td>\n'
+            currentLongestWord = word
             break
     htmlTableRow += '</tr>\n'
     return htmlTableRow
